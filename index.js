@@ -10,9 +10,7 @@ app.use(express.json())
 
 
 
-app.get('/',(req,res)=>{
-    res.send('hello world')
-})
+
 // -------------------------------------------
 // userName:CountriesCollection
 // password:1qE2wdGByQQNAXqK
@@ -36,7 +34,27 @@ async function run() {
     // Connect the client to the server	(optional starting in v4.7)
     await client.connect();
 
-    
+    const placesCollection =client.db('PlacesData').collection('places')
+
+
+    app.get('/',(req,res)=>{
+        res.send('This is server site homepage')
+    })
+
+app.get('/countries',async(req,res)=>{
+    const cursor=placesCollection.find();
+    const result=await cursor.toArray()
+    res.send(result)
+})
+
+
+  app.post('/countries',async(req,res)=>{
+    const country=req.body;
+    console.log(country)
+    const resutl=await placesCollection.insertOne(country)
+    res.send(resutl)
+  })
+
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
