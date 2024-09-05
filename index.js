@@ -63,9 +63,23 @@ app.get("/myList/:email",async(req,res)=>{
   app.post('/countries',async(req,res)=>{
     const country=req.body;
     console.log(country)
-    const resutl=await placesCollection.insertOne(country)
-    res.send(resutl)
+    const result=await placesCollection.insertOne(country)
+    res.send(result)
   })
+
+  // --------------update server data ------------------
+
+
+  // ----------------------------------------------
+
+  // --------------delete button ------------------
+  app.delete('/countries/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:new ObjectId(id)}
+    const result=await placesCollection.deleteOne(query)
+    res.send(result)
+  } )
+  // ---------------------------------------------
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
