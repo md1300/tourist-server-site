@@ -1,6 +1,6 @@
 const express=require('express')
 const cors=require('cors')
-const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId, } = require('mongodb');
 const app=express()
 
 const port=process.env.PORT|| 4000
@@ -53,7 +53,13 @@ app.get('/countries/:id',async(req,res)=>{
   const result=await placesCollection.findOne(query)
   res.send(result)
 })
-
+// -----------------------------------------
+app.get("/myList/:email",async(req,res)=>{
+  console.log(req.params.email)
+  const result=await placesCollection.find({email:req.params.email}).toArray();
+  res.send(result)
+})
+// ------------------------------------
   app.post('/countries',async(req,res)=>{
     const country=req.body;
     console.log(country)
