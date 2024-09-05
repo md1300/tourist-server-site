@@ -68,9 +68,35 @@ app.get("/myList/:email",async(req,res)=>{
   })
 
   // --------------update server data ------------------
-
-
-  // ----------------------------------------------
+   app.get('/countries/:id',async(req,res)=>{
+    const id=req.params.id ;
+    const query={_id:new ObjectId(id)}
+    const result=await placesCollection.findOne(query)
+     res.send(result)
+   })  
+   
+   app.put('/countries/:id',async(req,res)=>{
+    const id=req.params.id;
+    const query={_id:new ObjectId(id)};
+    const options = { upsert: true };
+    const updatePlace=req.body;
+    const updateDoc = {
+      $set:{
+        imageUrl:updatePlace.imageUrl,
+        spotsName:updatePlace.spotsName,
+        email:updatePlace.email,
+        countryName:updatePlace.countryName,
+        location:updatePlace.location,
+        description:updatePlace.description,
+        averageCost:updatePlace.averageCost,
+        seasonality:updatePlace.seasonality,
+        travelTime:updatePlace.travelTime,
+        totalVisitorPerYear:updatePlace.totalVisitorPerYear
+      }
+    }
+    const result=await placesCollection.updateOne(query,updateDoc,options);
+    res.send(result)
+   })
 
   // --------------delete button ------------------
   app.delete('/countries/:id',async(req,res)=>{
