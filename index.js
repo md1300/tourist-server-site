@@ -53,13 +53,19 @@ app.get('/countries/:id',async(req,res)=>{
   const result=await placesCollection.findOne(query)
   res.send(result)
 })
-// -----------------------------------------
+// -----------------get by email------------------------
 app.get("/myList/:email",async(req,res)=>{
-  console.log(req.params.email)
+  // console.log(req.params.email)
   const result=await placesCollection.find({email:req.params.email}).toArray();
   res.send(result)
 })
-// ------------------------------------
+// -------------------get by country name------------
+app.get("/country/:countryName",async(req,res)=>{
+     console.log(req.params.countryName)
+     const result=await placesCollection.find({countryName:req.params.countryName}).toArray();
+     res.send(result)
+})
+// ---------------- post country data--------------------
   app.post('/countries',async(req,res)=>{
     const country=req.body;
     console.log(country)
@@ -83,6 +89,7 @@ app.get("/myList/:email",async(req,res)=>{
     const updateDoc = {
       $set:{
         imageUrl:updatePlace.imageUrl,
+        userName:updatePlace.userName,
         spotsName:updatePlace.spotsName,
         email:updatePlace.email,
         countryName:updatePlace.countryName,
