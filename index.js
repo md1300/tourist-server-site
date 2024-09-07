@@ -65,6 +65,8 @@ app.get("/country/:countryName",async(req,res)=>{
      const result=await placesCollection.find({countryName:req.params.countryName}).toArray();
      res.send(result)
 })
+// --------------
+
 // ---------------- post country data--------------------
   app.post('/countries',async(req,res)=>{
     const country=req.body;
